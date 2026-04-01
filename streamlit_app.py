@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import os
 import streamlit as st
 import pandas as pd
@@ -42,11 +41,11 @@ def load_data():
 
 df = load_data()
 
-st.title('ðŸ¾ India Dog Care App â€” Survey Analytics Dashboard')
+st.title(' India Dog Care App ” Survey Analytics Dashboard')
 st.markdown("**MBA Â· Data Analytics in Decision Making â€” Group Project**")
 
 # â”€â”€ Sidebar Filters â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-st.sidebar.title("ðŸ”Ž Global Filters")
+st.sidebar.title("Global Filters")
 age = st.sidebar.multiselect(
     'Age Group', sorted(df['age_group'].unique()),
     default=sorted(df['age_group'].unique())
@@ -67,15 +66,7 @@ c3.metric('App Interest %', f"{(df_f['app_use_likelihood'] != 'No').mean() * 100
 c4.metric('Avg Dogs', f"{df_f['num_dogs'].mean():.1f}")
 
 # â”€â”€ Tabs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-tabs = st.tabs([
-    'ðŸ“Š Overview',
-    'ðŸ’° Spending',
-    'âš ï¸ Challenges',
-    'â­ Features',
-    'ðŸ¤– Classification',
-    'ðŸ”µ Clustering',
-    'ðŸ“ˆ Regression',
-])
+tabs = st.tabs(['Overview', 'Spending', 'Challenges', 'Features', 'Classification', 'Clustering', 'Regression'])
 
 # â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 # TAB 0 â€” OVERVIEW
