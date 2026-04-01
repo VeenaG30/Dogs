@@ -7,7 +7,7 @@ import plotly.figure_factory as ff
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-# ── Scikit-learn ──────────────────────────────────────────────────────────────
+# â”€â”€ Scikit-learn â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.decomposition import PCA
@@ -24,8 +24,8 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import mean_squared_error, r2_score
 
-# ─────────────────────────────────────────────────────────────────────────────
-st.set_page_config(page_title='Dog App Analytics', layout='wide', page_icon='🐾')
+# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+st.set_page_config(page_title='Dog App Analytics', layout='wide', page_icon='ðŸ¾')
 
 @st.cache_data
 def load_data():
@@ -41,11 +41,11 @@ def load_data():
 
 df = load_data()
 
-st.title('🐾 India Dog Care App — Survey Analytics Dashboard')
-st.markdown("**MBA · Data Analytics in Decision Making — Group Project**")
+st.title('ðŸ¾ India Dog Care App â€” Survey Analytics Dashboard')
+st.markdown("**MBA Â· Data Analytics in Decision Making â€” Group Project**")
 
-# ── Sidebar Filters ───────────────────────────────────────────────────────────
-st.sidebar.title("🔎 Global Filters")
+# â”€â”€ Sidebar Filters â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+st.sidebar.title("ðŸ”Ž Global Filters")
 age = st.sidebar.multiselect(
     'Age Group', sorted(df['age_group'].unique()),
     default=sorted(df['age_group'].unique())
@@ -58,27 +58,27 @@ region = st.sidebar.multiselect(
 df_f = df[(df['age_group'].isin(age)) & (df['region'].isin(region))].copy()
 df_no_na = df_f.dropna(subset=['monthly_spend_inr']).copy()
 
-# ── KPI Metrics ───────────────────────────────────────────────────────────────
+# â”€â”€ KPI Metrics â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 c1, c2, c3, c4 = st.columns(4)
 c1.metric('Respondents', len(df_f))
 c2.metric('Avg Spend (INR)', f"{df_no_na['monthly_spend_inr'].mean():.0f}")
 c3.metric('App Interest %', f"{(df_f['app_use_likelihood'] != 'No').mean() * 100:.0f}%")
 c4.metric('Avg Dogs', f"{df_f['num_dogs'].mean():.1f}")
 
-# ── Tabs ──────────────────────────────────────────────────────────────────────
+# â”€â”€ Tabs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 tabs = st.tabs([
-    '📊 Overview',
-    '💰 Spending',
-    '⚠️ Challenges',
-    '⭐ Features',
-    '🤖 Classification',
-    '🔵 Clustering',
-    '📈 Regression',
+    'ðŸ“Š Overview',
+    'ðŸ’° Spending',
+    'âš ï¸ Challenges',
+    'â­ Features',
+    'ðŸ¤– Classification',
+    'ðŸ”µ Clustering',
+    'ðŸ“ˆ Regression',
 ])
 
-# ─────────────────────────────────────────────────────────────────────────────
-# TAB 0 — OVERVIEW
-# ─────────────────────────────────────────────────────────────────────────────
+# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# TAB 0 â€” OVERVIEW
+# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 with tabs[0]:
     col1, col2 = st.columns(2)
     color_map = {'Yes': '#2ecc71', 'Maybe': '#f39c12', 'No': '#e74c3c'}
@@ -89,9 +89,9 @@ with tabs[0]:
                         title='Monthly Dog Spending Distribution (INR)')
     col2.plotly_chart(fig2, use_container_width=True)
 
-# ─────────────────────────────────────────────────────────────────────────────
-# TAB 1 — SPENDING
-# ─────────────────────────────────────────────────────────────────────────────
+# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# TAB 1 â€” SPENDING
+# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 with tabs[1]:
     col1, col2 = st.columns(2)
     fig3 = px.box(df_no_na, x='age_group', y='monthly_spend_inr',
@@ -102,9 +102,9 @@ with tabs[1]:
                   title='Residence Type vs Avg Number of Dogs', color='residence_type')
     col2.plotly_chart(fig4, use_container_width=True)
 
-# ─────────────────────────────────────────────────────────────────────────────
-# TAB 2 — CHALLENGES
-# ─────────────────────────────────────────────────────────────────────────────
+# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# TAB 2 â€” CHALLENGES
+# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 with tabs[2]:
     challenge_counts = df_f['biggest_challenge'].value_counts().reset_index()
     challenge_counts.columns = ['challenge', 'count']
@@ -112,9 +112,9 @@ with tabs[2]:
                   title='Biggest Challenges for Dog Owners', color='challenge')
     st.plotly_chart(fig5, use_container_width=True)
 
-# ─────────────────────────────────────────────────────────────────────────────
-# TAB 3 — FEATURES
-# ─────────────────────────────────────────────────────────────────────────────
+# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# TAB 3 â€” FEATURES
+# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 with tabs[3]:
     feature_df = pd.DataFrame({
         'Feature': ['Vet Booking', 'Dog Parks', 'Grooming', 'Lost Dog Alert',
@@ -126,17 +126,17 @@ with tabs[3]:
                   color_continuous_scale='Blues')
     st.plotly_chart(fig6, use_container_width=True)
 
-# ─────────────────────────────────────────────────────────────────────────────
-# TAB 4 — CLASSIFICATION (10 marks)
-# ─────────────────────────────────────────────────────────────────────────────
+# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# TAB 4 â€” CLASSIFICATION (10 marks)
+# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 with tabs[4]:
-    st.header("🤖 Classification Algorithms — Performance Comparison")
+    st.header("ðŸ¤– Classification Algorithms â€” Performance Comparison")
     st.markdown(
         "**Target:** Predict whether a respondent will adopt the app (`app_use_likelihood = Yes`).  \n"
         "All classifiers are trained and evaluated on the same train/test split."
     )
 
-    # ── Feature prep ─────────────────────────────────────────────────────────
+    # â”€â”€ Feature prep â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     clf_features = [
         'monthly_spend_inr', 'num_dogs', 'num_services_used',
         'num_features_valued', 'app_interest_scale', 'ownership_experience_encoded'
@@ -167,7 +167,7 @@ with tabs[4]:
     }
 
     results, trained_models = [], {}
-    with st.spinner("Training all 7 classifiers …"):
+    with st.spinner("Training all 7 classifiers â€¦"):
         for name, clf in classifiers.items():
             clf.fit(X_train_s, y_train)
             y_pred = clf.predict(X_test_s)
@@ -184,8 +184,8 @@ with tabs[4]:
                 .sort_values("F1-Score", ascending=False)
                 .reset_index(drop=True))
 
-    # ── Performance table ─────────────────────────────────────────────────────
-    st.subheader("📋 Performance Comparison Table")
+    # â”€â”€ Performance table â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    st.subheader("ðŸ“‹ Performance Comparison Table")
     st.dataframe(
         res_df.style
               .highlight_max(subset=["Accuracy","Precision","Recall","F1-Score"], color="#d4edda")
@@ -193,8 +193,8 @@ with tabs[4]:
         use_container_width=True
     )
 
-    # ── Grouped bar chart ─────────────────────────────────────────────────────
-    st.subheader("📊 Metric Comparison Chart")
+    # â”€â”€ Grouped bar chart â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    st.subheader("ðŸ“Š Metric Comparison Chart")
     metrics = ["Accuracy", "Precision", "Recall", "F1-Score"]
     fig_clf = go.Figure()
     colors = ['#636EFA', '#EF553B', '#00CC96', '#AB63FA']
@@ -204,16 +204,16 @@ with tabs[4]:
             marker_color=colors[i]
         ))
     fig_clf.update_layout(
-        barmode='group', title="All Classifiers — Accuracy / Precision / Recall / F1",
+        barmode='group', title="All Classifiers â€” Accuracy / Precision / Recall / F1",
         yaxis=dict(range=[0, 1.15]), xaxis_tickangle=-30,
         legend=dict(orientation="h", yanchor="bottom", y=1.02)
     )
     st.plotly_chart(fig_clf, use_container_width=True)
 
-    # ── Confusion matrix for best model ──────────────────────────────────────
+    # â”€â”€ Confusion matrix for best model â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     best_name = res_df.iloc[0]["Algorithm"]
     _, y_pred_best = trained_models[best_name]
-    st.subheader(f"🔍 Confusion Matrix — Best Model: **{best_name}**")
+    st.subheader(f"ðŸ” Confusion Matrix â€” Best Model: **{best_name}**")
     cm = confusion_matrix(y_test, y_pred_best)
     fig_cm = ff.create_annotated_heatmap(
         z=cm.tolist(),
@@ -221,28 +221,28 @@ with tabs[4]:
         y=["Actual: No", "Actual: Yes"],
         colorscale='Blues', showscale=False
     )
-    fig_cm.update_layout(title=f"Confusion Matrix — {best_name}")
+    fig_cm.update_layout(title=f"Confusion Matrix â€” {best_name}")
     st.plotly_chart(fig_cm, use_container_width=True)
 
-    # ── Detailed report ───────────────────────────────────────────────────────
-    st.subheader("📄 Classification Report")
+    # â”€â”€ Detailed report â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    st.subheader("ðŸ“„ Classification Report")
     st.code(classification_report(y_test, y_pred_best,
                                   target_names=["Won't Adopt", "Will Adopt"]))
 
-    # ── Feature importance ────────────────────────────────────────────────────
+    # â”€â”€ Feature importance â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     best_clf, _ = trained_models[best_name]
     if hasattr(best_clf, "feature_importances_"):
-        st.subheader("🌟 Feature Importance")
+        st.subheader("ðŸŒŸ Feature Importance")
         fi = pd.DataFrame({
             "Feature":   clf_features,
             "Importance": best_clf.feature_importances_
         }).sort_values("Importance", ascending=True)
         fig_fi = px.bar(fi, x="Importance", y="Feature", orientation="h",
-                        title=f"Feature Importance — {best_name}",
+                        title=f"Feature Importance â€” {best_name}",
                         color="Importance", color_continuous_scale="Oranges")
         st.plotly_chart(fig_fi, use_container_width=True)
 
-    # ── Insight box ───────────────────────────────────────────────────────────
+    # â”€â”€ Insight box â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     st.info(
         f"**Key Insight:** **{best_name}** achieved the highest F1-Score of "
         f"**{res_df.iloc[0]['F1-Score']:.4f}**, making it the recommended model for "
@@ -251,11 +251,11 @@ with tabs[4]:
         f"unlikely adopters."
     )
 
-# ─────────────────────────────────────────────────────────────────────────────
-# TAB 5 — CLUSTERING (10 marks)
-# ─────────────────────────────────────────────────────────────────────────────
+# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# TAB 5 â€” CLUSTERING (10 marks)
+# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 with tabs[5]:
-    st.header("🔵 Clustering Analysis — Customer Personas")
+    st.header("ðŸ”µ Clustering Analysis â€” Customer Personas")
     st.markdown(
         "Segment dog owners into distinct personas using unsupervised clustering. "
         "Select an algorithm and tune parameters below."
@@ -274,10 +274,10 @@ with tabs[5]:
     X_cl = df_no_na[cl_features].dropna()
     X_scaled = StandardScaler().fit_transform(X_cl)
 
-    # ── Algorithm-specific controls ───────────────────────────────────────────
+    # â”€â”€ Algorithm-specific controls â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     if cl_algo == "K-Means":
         # Elbow curve
-        st.subheader("📐 Elbow Method — Choose Optimal k")
+        st.subheader("ðŸ“ Elbow Method â€” Choose Optimal k")
         inertias = []
         k_range = range(2, 11)
         for k_ in k_range:
@@ -310,11 +310,11 @@ with tabs[5]:
     n_noise = int((labels == -1).sum())
     st.success(
         f"Found **{len(unique_clusters)}** cluster(s): {unique_clusters}"
-        + (f" — including **{n_noise} noise points** (label -1)" if n_noise > 0 else "")
+        + (f" â€” including **{n_noise} noise points** (label -1)" if n_noise > 0 else "")
     )
 
-    # ── PCA scatter ───────────────────────────────────────────────────────────
-    st.subheader("🗺️ Cluster Visualisation (PCA 2D projection)")
+    # â”€â”€ PCA scatter â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    st.subheader("ðŸ—ºï¸ Cluster Visualisation (PCA 2D projection)")
     pca = PCA(n_components=2, random_state=42)
     coords = pca.fit_transform(X_scaled)
     df_pca = pd.DataFrame({
@@ -323,15 +323,15 @@ with tabs[5]:
     })
     fig_pca = px.scatter(
         df_pca, x="PC1", y="PC2", color="Cluster",
-        title=(f"Clusters (PCA) — PC1 {pca.explained_variance_ratio_[0]*100:.1f}% var, "
+        title=(f"Clusters (PCA) â€” PC1 {pca.explained_variance_ratio_[0]*100:.1f}% var, "
                f"PC2 {pca.explained_variance_ratio_[1]*100:.1f}% var"),
         opacity=0.75
     )
     st.plotly_chart(fig_pca, use_container_width=True)
 
-    # ── Spend vs Dogs scatter (original space) ────────────────────────────────
+    # â”€â”€ Spend vs Dogs scatter (original space) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     if 'monthly_spend_inr' in cl_features and 'num_dogs' in cl_features:
-        st.subheader("💡 Spending vs Number of Dogs — by Cluster")
+        st.subheader("ðŸ’¡ Spending vs Number of Dogs â€” by Cluster")
         df_cl_plot = df_cl.copy()
         if 'num_services_used' in df_cl_plot.columns:
             fig_scatter = px.scatter(
@@ -346,8 +346,8 @@ with tabs[5]:
             )
         st.plotly_chart(fig_scatter, use_container_width=True)
 
-    # ── Cluster profiles ──────────────────────────────────────────────────────
-    st.subheader("📋 Cluster Profiles (Mean Values)")
+    # â”€â”€ Cluster profiles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    st.subheader("ðŸ“‹ Cluster Profiles (Mean Values)")
     profile = df_cl.groupby("Cluster")[cl_features].mean().round(2)
     st.dataframe(profile, use_container_width=True)
 
@@ -360,24 +360,24 @@ with tabs[5]:
     )
     st.plotly_chart(fig_prof, use_container_width=True)
 
-    # ── Persona labels (K-Means default) ─────────────────────────────────────
+    # â”€â”€ Persona labels (K-Means default) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     if cl_algo == "K-Means" and k == 4:
         persona_labels = {
-            '0': '🐶 Casual Owner',
-            '1': '❤️ Engaged Pet Parent',
-            '2': '🏠 Multi-Dog Household',
-            '3': '💎 Premium Spender'
+            '0': 'ðŸ¶ Casual Owner',
+            '1': 'â¤ï¸ Engaged Pet Parent',
+            '2': 'ðŸ  Multi-Dog Household',
+            '3': 'ðŸ’Ž Premium Spender'
         }
         df_cl['Persona'] = df_cl['Cluster'].map(persona_labels)
-        st.subheader("🎭 Persona Distribution")
+        st.subheader("ðŸŽ­ Persona Distribution")
         persona_counts = df_cl['Persona'].value_counts().reset_index()
         persona_counts.columns = ['Persona', 'Count']
         fig_persona = px.pie(persona_counts, names='Persona', values='Count',
                              title="Customer Persona Breakdown", hole=0.4)
         st.plotly_chart(fig_persona, use_container_width=True)
 
-    # ── Interpretation ────────────────────────────────────────────────────────
-    st.subheader("📝 Cluster Interpretation")
+    # â”€â”€ Interpretation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    st.subheader("ðŸ“ Cluster Interpretation")
     for cl in [c for c in unique_clusters if c != '-1']:
         row = profile.loc[cl]
         high_feat = row.nlargest(2).index.tolist()
@@ -392,15 +392,15 @@ with tabs[5]:
     if '-1' in unique_clusters:
         st.markdown(
             "**Cluster -1 (Noise/Outliers):** These respondents have unusual combinations "
-            "of features and do not fit any main segment — they may represent niche users "
+            "of features and do not fit any main segment â€” they may represent niche users "
             "worth investigating separately."
         )
 
-# ─────────────────────────────────────────────────────────────────────────────
-# TAB 6 — REGRESSION (10 marks)
-# ─────────────────────────────────────────────────────────────────────────────
+# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# TAB 6 â€” REGRESSION (10 marks)
+# â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 with tabs[6]:
-    st.header("📈 Regression Analysis — Linear, Ridge & Lasso")
+    st.header("ðŸ“ˆ Regression Analysis â€” Linear, Ridge & Lasso")
     st.markdown(
         "Predict **monthly spending** (or another numeric target) using regularised "
         "regression. Compare all three models side-by-side."
@@ -440,8 +440,8 @@ with tabs[6]:
 
     reg_models = {
         "Linear Regression": LinearRegression(),
-        f"Ridge (α={alpha})": Ridge(alpha=alpha),
-        f"Lasso (α={alpha})": Lasso(alpha=alpha, max_iter=10000),
+        f"Ridge (Î±={alpha})": Ridge(alpha=alpha),
+        f"Lasso (Î±={alpha})": Lasso(alpha=alpha, max_iter=10000),
     }
 
     reg_results, preds_dict, coef_dict = [], {}, {}
@@ -456,30 +456,30 @@ with tabs[6]:
             "Model":    mname,
             "MSE":      round(mse, 2),
             "RMSE":     round(np.sqrt(mse), 2),
-            "R² Score": round(r2_score(y_te, y_pred_r), 4),
+            "RÂ² Score": round(r2_score(y_te, y_pred_r), 4),
         })
 
     res_reg = pd.DataFrame(reg_results)
 
-    # ── Performance table ─────────────────────────────────────────────────────
-    st.subheader("📋 Regression Performance Comparison")
+    # â”€â”€ Performance table â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    st.subheader("ðŸ“‹ Regression Performance Comparison")
     st.dataframe(
         res_reg.style
-               .highlight_max(subset=["R² Score"], color="#d4edda")
+               .highlight_max(subset=["RÂ² Score"], color="#d4edda")
                .highlight_min(subset=["RMSE", "MSE"], color="#d4edda"),
         use_container_width=True
     )
 
-    # ── Metric bar chart ──────────────────────────────────────────────────────
-    st.subheader("📊 R² Score Comparison")
-    fig_r2 = px.bar(res_reg, x="Model", y="R² Score", color="Model",
-                    title="R² Score by Regression Model",
+    # â”€â”€ Metric bar chart â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    st.subheader("ðŸ“Š RÂ² Score Comparison")
+    fig_r2 = px.bar(res_reg, x="Model", y="RÂ² Score", color="Model",
+                    title="RÂ² Score by Regression Model",
                     color_discrete_sequence=px.colors.qualitative.Set2)
     fig_r2.update_layout(yaxis=dict(range=[0, 1.1]))
     st.plotly_chart(fig_r2, use_container_width=True)
 
-    # ── Actual vs Predicted ───────────────────────────────────────────────────
-    st.subheader("🎯 Actual vs Predicted")
+    # â”€â”€ Actual vs Predicted â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    st.subheader("ðŸŽ¯ Actual vs Predicted")
     fig_avp = make_subplots(rows=1, cols=3, subplot_titles=list(preds_dict.keys()))
     for i, (mname, y_pred_r) in enumerate(preds_dict.items(), 1):
         fig_avp.add_trace(
@@ -498,30 +498,30 @@ with tabs[6]:
         )
         fig_avp.update_xaxes(title_text="Actual", row=1, col=i)
         fig_avp.update_yaxes(title_text="Predicted", row=1, col=i)
-    fig_avp.update_layout(title="Actual vs Predicted — All Models", height=400)
+    fig_avp.update_layout(title="Actual vs Predicted â€” All Models", height=400)
     st.plotly_chart(fig_avp, use_container_width=True)
 
-    # ── Coefficient comparison ────────────────────────────────────────────────
-    st.subheader("🔢 Coefficient Comparison (Effect of Regularisation)")
+    # â”€â”€ Coefficient comparison â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    st.subheader("ðŸ”¢ Coefficient Comparison (Effect of Regularisation)")
     coef_df = pd.DataFrame(coef_dict, index=selected_feats)
     fig_coef = px.bar(
         coef_df.reset_index().melt(id_vars="index"),
         x="index", y="value", color="variable", barmode="group",
-        title="Feature Coefficients — Linear vs Ridge vs Lasso",
+        title="Feature Coefficients â€” Linear vs Ridge vs Lasso",
         labels={"index": "Feature", "value": "Coefficient", "variable": "Model"}
     )
     fig_coef.update_layout(xaxis_tickangle=-30)
     st.plotly_chart(fig_coef, use_container_width=True)
 
-    # ── Interpretation ────────────────────────────────────────────────────────
-    best_reg = res_reg.sort_values("R² Score", ascending=False).iloc[0]
+    # â”€â”€ Interpretation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    best_reg = res_reg.sort_values("RÂ² Score", ascending=False).iloc[0]
     st.info(
-        f"**Key Insight:** **{best_reg['Model']}** achieves the highest R² of "
-        f"**{best_reg['R² Score']:.4f}**, explaining {best_reg['R² Score']*100:.1f}% of "
+        f"**Key Insight:** **{best_reg['Model']}** achieves the highest RÂ² of "
+        f"**{best_reg['RÂ² Score']:.4f}**, explaining {best_reg['RÂ² Score']*100:.1f}% of "
         f"variance in {target_reg.replace('_',' ')}. "
         f"**Lasso** drives less important feature coefficients to zero (automatic feature selection), "
-        f"while **Ridge** shrinks all coefficients — both reduce overfitting vs plain Linear Regression. "
+        f"while **Ridge** shrinks all coefficients â€” both reduce overfitting vs plain Linear Regression. "
         f"A higher alpha increases regularisation strength."
     )
 
-st.caption('MBA Project · India Dog Care App Market Analysis · Data Analytics in Decision Making')
+st.caption('MBA Project Â· India Dog Care App Market Analysis Â· Data Analytics in Decision Making')
