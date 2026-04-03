@@ -422,7 +422,7 @@ with tabs[1]:
             "People living in houses own <strong>more dogs on average</strong> than those in apartments. "
             "Our app must easily handle 'multiple dog profiles' so owners can manage all their pets in one place."
         )
-            col3, col4 = st.columns(2)
+    col3, col4 = st.columns(2)
     with col3:
         spend_region = df_no_na_s.groupby('region')['monthly_spend_inr'].mean().reset_index()
         spend_region.columns = ['Region', 'Avg Spend (INR)']
