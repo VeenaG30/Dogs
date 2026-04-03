@@ -263,37 +263,65 @@ with tabs[0]:
         })
     map_df = pd.DataFrame(map_rows)
 
-    fig_map = px.scatter_mapbox(
-        map_df,
-        lat="lat", lon="lon",
-        size="Respondents",
-        color="Will Use App (%)",
-        color_continuous_scale=["#2a5c63", "#4f98a3", "#a3d4da"],
-        hover_name="Region",
-        hover_data={
-            "State": True,
-            "Respondents": True,
-            "Will Use App (%)": True,
-            "Maybe (%)": True,
-            "Won't Use (%)": True,
-            "Avg Spend (INR)": True,
-            "lat": False, "lon": False,
-        },
-        size_max=55,
-        zoom=3.8,
-        center={"lat": 22.5, "lon": 80.0},
-        mapbox_style="carto-darkmatter",
-        height=480,
-    )
-    fig_map.update_layout(
-        paper_bgcolor=C["paper_bg"],
-        font=dict(family="Inter", color=C["font_color"], size=12),
-        margin=dict(l=0, r=0, t=8, b=0),
-        coloraxis_colorbar=dict(
-            title="App Interest %",
-            tickfont=dict(color=C["font_color"]),
-            titlefont=dict(color=C["font_color"]),
+    fig_map = go.Figure()
+
+    fig_map.add_trace(go.Scattergeo(
+        lat=map_df["lat"],
+        lon=map_df["lon"],
+        text=map_df.apply(lambda r: (
+            f"<b>{r['Region']}</b><br>"
+            f"State: {r['State']}<br>"
+            f"Respondents: {r['Respondents']}<br>"
+            f"Will Use App: {r['Will Use App (%)']:.1f}%<br>"
+            f"Maybe: {r['Maybe (%)']:.1f}%<br>"
+            f"Won't Use: {r['Won\'t Use (%)']:.1f}%<br>"
+            f"Avg Spend: Rs.{r['Avg Spend (INR)']:,.0f}"
+        ), axis=1),
+        hovertemplate="%{text}<extra></extra>",
+        mode="markers+text",
+        textposition="top center",
+        textfont=dict(color="#e8eaf0", size=11),
+        marker=dict(
+            size=map_df["Respondents"] / map_df["Respondents"].max() * 40 + 14,
+            color=map_df["Will Use App (%)"],
+            colorscale=[[0,"#2a5c63"],[0.5,"#4f98a3"],[1.0,"#a3d4da"]],
+            cmin=map_df["Will Use App (%)"].min(),
+            cmax=map_df["Will Use App (%)"].max(),
+            showscale=True,
+            colorbar=dict(
+                title=dict(text="App Interest %", font=dict(color="#e8eaf0")),
+                tickfont=dict(color="#e8eaf0"),
+                bgcolor="#1a1d27",
+                bordercolor="#2e3148",
+            ),
+            line=dict(color="#0f1117", width=1),
+            opacity=0.9,
         ),
+    ))
+
+    fig_map.update_layout(
+        geo=dict(
+            scope="asia",
+            showland=True,
+            landcolor="#1a1d27",
+            showocean=True,
+            oceancolor="#0f1117",
+            showcountries=True,
+            countrycolor="#2e3148",
+            showframe=False,
+            showcoastlines=True,
+            coastlinecolor="#2e3148",
+            projection_type="natural earth",
+            center=dict(lat=22.5, lon=80.0),
+            lataxis=dict(range=[6, 38]),
+            lonaxis=dict(range=[65, 100]),
+            bgcolor="#0f1117",
+        ),
+        paper_bgcolor="#0f1117",
+        plot_bgcolor="#0f1117",
+        font=dict(family="Inter", color="#e8eaf0", size=12),
+        margin=dict(l=0, r=0, t=8, b=0),
+        height=500,
     )
     st.plotly_chart(fig_map, use_container_width=True)
     insight(
