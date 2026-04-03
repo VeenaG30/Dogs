@@ -659,7 +659,7 @@ with tabs[4]:
             "Seeing these scores side-by-side helps us pick the <strong>winning AI model</strong>. "
             "We want an AI that is highly accurate so we don't accidentally ignore people who would have loved our app."
         )
-                best_name = res_df.iloc[0]["Algorithm"]
+        best_name = res_df.iloc[0]["Algorithm"]
         _, y_pred_best = trained_models[best_name]
 
         col1, col2 = st.columns(2)
