@@ -363,7 +363,7 @@ with tabs[0]:
             "We should offer basic plans for everyone and VIP plans for the big spenders."
         )
 
-    col3, col4 = st.columns(2)
+        col3, col4 = st.columns(2)
     with col3:
         region_intent = df_f.groupby(['region', 'app_use_likelihood']).size().reset_index(name='count')
         fig_ri = px.bar(region_intent, x='region', y='count', color='app_use_likelihood',
