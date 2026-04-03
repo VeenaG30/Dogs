@@ -602,6 +602,19 @@ with tabs[4]:
     st.markdown('<div class="section-header">🤖 Classification Models — Predicting App Adoption</div>',
                 unsafe_allow_html=True)
 
+    st.markdown("""
+    <div class="insight-box" style="margin-bottom:20px; border-left: 3px solid #4f98a3;">
+        <div class="insight-title">🎯 What Are We Doing Here?</div>
+        We are training <strong>7 machine learning classifiers</strong> to predict whether a dog owner
+        will adopt our app based on their profile — spending habits, number of dogs, services used,
+        and experience level.<br><br>
+        <strong>Why does this matter for the business?</strong> Instead of marketing to everyone,
+        we can use the best model to <em>automatically score and rank</em> potential users —
+        focusing ad spend only on people most likely to convert.
+        This directly reduces <strong>Customer Acquisition Cost (CAC)</strong> and improves ROI.
+    </div>
+    """, unsafe_allow_html=True)
+
     f1, f2, f3 = st.columns(3)
     with f1:
         age_cl = st.multiselect("Age Group", sorted(df["age_group"].unique()),
@@ -670,21 +683,69 @@ with tabs[4]:
             "F1-Score is our key metric — it balances precision and recall for the fairest evaluation."
         )
 
-        st.markdown('<div class="section-header">Metric Comparison Chart</div>', unsafe_allow_html=True)
-        metrics = ["Accuracy","Precision","Recall","F1-Score"]
-        fig_clf = go.Figure()
-        for i, m in enumerate(metrics):
-            colors = [C["primary"], C["accent_orange"], C["accent_pink"], C["accent_blue"]]
-            fig_clf.add_trace(go.Bar(name=m, x=res_df["Algorithm"], y=res_df[m],
-                                     marker_color=colors[i]))
-        fig_clf.update_layout(barmode="group", yaxis=dict(range=[0,1.15]),
-                               xaxis_tickangle=-25,
-                               legend=dict(orientation="h", yanchor="bottom", y=1.02))
-        apply_theme(fig_clf, "All Classifiers — Accuracy / Precision / Recall / F1")
-        st.plotly_chart(fig_clf, use_container_width=True)
+        st.markdown('<div class="section-header">📊 Metric Comparison — One Chart per Metric</div>', unsafe_allow_html=True)
+        st.markdown(
+            '<div class="insight-box" style="margin-bottom:16px;">' +
+            '<div class="insight-title">📖 How to Read These Charts</div>' +
+            'Each chart below shows how all 7 classifiers score on a single metric. ' +
+            '<strong>Accuracy</strong> = overall correct predictions. ' +
+            '<strong>Precision</strong> = of those predicted as "Will Adopt", how many actually will. ' +
+            '<strong>Recall</strong> = of all real adopters, how many did the model catch. ' +
+            '<strong>F1-Score</strong> = harmonic mean of Precision & Recall — our primary ranking metric.' +
+            '</div>',
+            unsafe_allow_html=True
+        )
+
+        metric_info = {
+            "Accuracy":  ("Overall correct predictions out of all predictions made.", C["primary"]),
+            "Precision": ("Of users predicted to adopt, how many actually will — avoids wasted outreach.", C["accent_orange"]),
+            "Recall":    ("Of all real adopters, how many did we correctly identify — avoids missed users.", C["accent_pink"]),
+            "F1-Score":  ("Balances Precision and Recall. Best single metric to rank our models.", C["accent_blue"]),
+        }
+
+        col_a, col_b = st.columns(2)
+        col_c, col_d = st.columns(2)
+        metric_cols = [col_a, col_b, col_c, col_d]
+
+        for idx, (metric, (desc, color)) in enumerate(metric_info.items()):
+            with metric_cols[idx]:
+                fig_m = go.Figure(go.Bar(
+                    x=res_df["Algorithm"],
+                    y=res_df[metric],
+                    marker=dict(
+                        color=res_df[metric],
+                        colorscale=[[0, "#1a2a2a"], [1, color]],
+                        showscale=False,
+                        line=dict(color="#0f1117", width=1),
+                    ),
+                    text=[f"{v:.3f}" for v in res_df[metric]],
+                    textposition="outside",
+                    textfont=dict(size=10, color="#e8eaf0"),
+                    hovertemplate="<b>%{x}</b><br>" + metric + ": %{y:.4f}<extra></extra>",
+                ))
+                fig_m.update_layout(
+                    template=C["plotly_template"],
+                    paper_bgcolor=C["paper_bg"],
+                    plot_bgcolor=C["plot_bg"],
+                    font=dict(family="Inter", color=C["font_color"], size=11),
+                    title=dict(text=metric, font=dict(size=13, color=color), x=0, xanchor="left"),
+                    margin=dict(l=12, r=12, t=40, b=90),
+                    yaxis=dict(range=[0, 1.18], gridcolor=C["grid_color"], tickformat=".2f"),
+                    xaxis=dict(tickangle=-35, linecolor=C["border"],
+                               tickfont=dict(size=10)),
+                    height=300,
+                )
+                st.plotly_chart(fig_m, use_container_width=True)
+                st.markdown(
+                    f'<div class="insight-box" style="margin-top:4px;padding:10px 14px;">' +
+                    f'<div class="insight-title">💡 {metric}</div>{desc}</div>',
+                    unsafe_allow_html=True
+                )
+
         insight(
-            "We want <strong>all four bars tall</strong> for the winning model — "
-            "not just accuracy. An imbalanced model will waste marketing spend."
+            "Compare all four charts together. The <strong>best model</strong> will have tall bars "
+            "across all four metrics — not just one. A high-Accuracy but low-Recall model will miss "
+            "real users and <strong>cost the business marketing budget</strong> on poor targeting."
         )
 
         best_name = res_df.iloc[0]["Algorithm"]
