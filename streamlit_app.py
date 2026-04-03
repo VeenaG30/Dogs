@@ -265,39 +265,46 @@ with tabs[0]:
 
     fig_map = go.Figure()
 
-    fig_map.add_trace(go.Scattergeo(
-        lat=map_df["lat"],
-        lon=map_df["lon"],
-        text=map_df.apply(lambda r: (
-            f"<b>{r['Region']}</b><br>"
-            f"State: {r['State']}<br>"
-            f"Respondents: {r['Respondents']}<br>"
-            f"Will Use App: {r['Will Use App (%)']:.1f}%<br>"
-            f"Maybe: {r['Maybe (%)']:.1f}%<br>"
-            f"Won't Use: {r['Won\'t Use (%)']:.1f}%<br>"
-            f"Avg Spend: Rs.{r['Avg Spend (INR)']:,.0f}"
-        ), axis=1),
-        hovertemplate="%{text}<extra></extra>",
-        mode="markers+text",
-        textposition="top center",
-        textfont=dict(color="#e8eaf0", size=11),
-        marker=dict(
-            size=map_df["Respondents"] / map_df["Respondents"].max() * 40 + 14,
-            color=map_df["Will Use App (%)"],
-            colorscale=[[0,"#2a5c63"],[0.5,"#4f98a3"],[1.0,"#a3d4da"]],
-            cmin=map_df["Will Use App (%)"].min(),
-            cmax=map_df["Will Use App (%)"].max(),
-            showscale=True,
-            colorbar=dict(
-                title=dict(text="App Interest %", font=dict(color="#e8eaf0")),
-                tickfont=dict(color="#e8eaf0"),
-                bgcolor="#1a1d27",
-                bordercolor="#2e3148",
+    # Distinct colour per region for easy visual separation
+    REGION_COLORS = {
+        "North":     "#4f98a3",
+        "South":     "#da7101",
+        "East":      "#6daa45",
+        "West":      "#a86fdf",
+        "Central":   "#e8af34",
+        "Northeast": "#dd6974",
+    }
+
+    for _, row in map_df.iterrows():
+        reg   = row["Region"]
+        color = REGION_COLORS.get(reg, "#4f98a3")
+        hover = (
+            f"<b style='font-size:14px'>{reg}</b><br>"
+            f"<span style='color:#aaa'>📍 {row['State']}</span><br><br>"
+            f"👥 Respondents: <b>{row['Respondents']}</b><br>"
+            f"✅ Will Use App: <b>{row['Will Use App (%)']}%</b><br>"
+            f"🤔 Maybe: <b>{row['Maybe (%)']}%</b><br>"
+            f"❌ Won't Use: <b>{row['Won\'t Use (%)']:.1f}%</b><br>"
+            f"💰 Avg Spend: <b>₹{row['Avg Spend (INR)']:,.0f}</b>"
+        )
+        bubble_size = row["Respondents"] / map_df["Respondents"].max() * 44 + 16
+        fig_map.add_trace(go.Scattergeo(
+            lat=[row["lat"]],
+            lon=[row["lon"]],
+            name=reg,
+            text=[f"<b>{reg}</b>"],
+            hovertemplate=hover + "<extra></extra>",
+            mode="markers+text",
+            textposition="top center",
+            textfont=dict(color=color, size=12, family="Inter"),
+            marker=dict(
+                size=bubble_size,
+                color=color,
+                opacity=0.82,
+                line=dict(color="#0f1117", width=2),
             ),
-            line=dict(color="#0f1117", width=1),
-            opacity=0.9,
-        ),
-    ))
+            showlegend=True,
+        ))
 
     fig_map.update_layout(
         geo=dict(
